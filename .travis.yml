@@ -6,7 +6,7 @@ services:
 script:
   - echo $(cat VERSION)
   - echo "$docker_pwd" | docker login -u "$docker_user" --password-stdin
-  - echo docker build -t ulise/hetida-designer-web:0.1.D${TRAVIS_BUILD_NUMBER} -f Dockerfile-frontend .
+  - echo docker build -t "$repository"/hetida-designer-web:0.1.D${TRAVIS_BUILD_NUMBER} -f Dockerfile-frontend .
   - docker build -t ulise/hetida-designer-backend:latest -f Dockerfile-backend .
   - docker tag ulise/hetida-designer-backend:latest ulise/hetida-designer-backend:$(cat VERSION)
   - docker push ulise/hetida-designer-backend:latest 
