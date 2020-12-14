@@ -4,7 +4,10 @@ services:
   - docker
 
 script:
-  - docker build -t ulise/hetida-designer-web:0.1.D${TRAVIS_BUILD_NUMBER} -f Dockerfile-frontend .
-  - docker build -t ulise/hetida-designer-backend:0.1.D${TRAVIS_BUILD_NUMBER} -f Dockerfile-backend .
-  - docker build -t ulise/hetida-designer-runtime:0.1.D${TRAVIS_BUILD_NUMBER} --target prod -f Dockerfile-runtime .
+  - echo $(cat VERSION)
+  - echo "$DOCKER_PWD" | docker login -u "$DOCKER_USER" --password-stdin
+  - echo docker build -t ulise/hetida-designer-web:0.1.D${TRAVIS_BUILD_NUMBER} -f Dockerfile-frontend .
+  - docker build -t ulise/hetida-designer-backend:latest -f Dockerfile-backend .
+  - docker tag ulise/hetida-designer-backend:latest ulise/hetida-designer-backend:$(cat VERSION)
+  - echo docker build -t ulise/hetida-designer-runtime:0.1.D${TRAVIS_BUILD_NUMBER} --target prod -f Dockerfile-runtime .
 
